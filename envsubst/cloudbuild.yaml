@@ -3,8 +3,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
   dir: ${_BUILD_DIRECTORY}
-  args: ['build', '--tag=gcr.io/${PROJECT_ID}/envsubst', '.']
-- name: 'gcr.io/${PROJECT_ID}/envsubst'
+  args: ['build', '--tag=us-east4-docker.pkg.dev/production-911/docker-public/envsubst', '.']
+- name: 'us-east4-docker.pkg.dev/production-911/docker-public/envsubst'
   dir: ${_BUILD_DIRECTORY}
   env: ["MARS_COLOR=Red"]
   args: ['-e', 'test.env', 'test.txt']
@@ -15,7 +15,7 @@ steps:
   dir: ${_BUILD_DIRECTORY}
   entrypoint: sh
   args: ['-c', '[[ "$(cat test.txt)" == "Mars is Red and Neptune is Blue" ]]']
-- name: 'gcr.io/${PROJECT_ID}/envsubst'
+- name: 'us-east4-docker.pkg.dev/production-911/docker-public/envsubst'
   dir: ${_BUILD_DIRECTORY}
   env: ["MARS_COLOR=Red"]
   args: ['-e', 'test.env', '-s', "'$${MARS_COLOR} $${NEPTUNE_COLOR}'", '**/test-shellformat.txt']
@@ -35,7 +35,7 @@ steps:
   args: ['-c', '[[ "$(cat test-globstar/test-shellformat.txt)" == ''Mars is Red, Neptune is Blue and Saturn is $${YELLOW}'' ]]']
 
 images:
-- 'gcr.io/${PROJECT_ID}/envsubst:latest'
+- 'us-east4-docker.pkg.dev/production-911/docker-public/envsubst:latest'
 
 tags:
 - 'cloud-builders-community'
